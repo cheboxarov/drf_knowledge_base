@@ -28,3 +28,12 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
         if user.is_staff:
             return True
         return obj.section.id in user.change_list
+
+    def validate(self, data):
+        parent = data.get('parent')
+        section = data.get('section')
+
+        if parent and parent.section != section:
+            raise serializers.ValidationError(
+                "The section of the parent article must match the section of the article being modified.")
+        return data
