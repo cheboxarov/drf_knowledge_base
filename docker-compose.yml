@@ -32,15 +32,15 @@ services:
     volumes:
       - static_data:/var/www/html/static/
       - ./nginx-conf.d:/etc/nginx/conf.d
-      - ./nginx/cert.pem:/etc/cert.pem
-      - ./nginx/key.pem:/etc/key.pem
+      - ./nginx-conf.d/cert.pem:/etc/cert.pem
+      - ./nginx-conf.d/key.pem:/etc/key.pem
   certbot:
     depends_on:
       - nginx
     ports:
       - "6000:80"
     volumes:
-      - ./nginx/:/etc/nginx/
+      - ./nginx-conf.d/:/etc/nginx/
     build:
       context: ./certbot
       dockerfile: Dockerfile
