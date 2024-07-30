@@ -12,6 +12,7 @@ certbot certonly --standalone --email $DOMAIN_EMAIL -d $DOMAIN_URL --cert-name=c
 rm -rf /etc/nginx/cert.pem
 rm -rf /etc/nginx/key.pem
 
-# копируем сертификаты из образа certbot в папку Nginx
-cp /etc/letsencrypt/live/certfolder*/fullchain.pem /etc/nginx/cert.pem
-cp /etc/letsencrypt/live/certfolder*/privkey.pem /etc/nginx/key.pem
+## копируем сертификаты из образа certbot в папку Nginx
+#cp /etc/letsencrypt/live/certfolder*/fullchain.pem /etc/nginx/cert.pem
+#cp /etc/letsencrypt/live/certfolder*/privkey.pem /etc/nginx/key.pem
+ls /etc/letsencrypt/live/
