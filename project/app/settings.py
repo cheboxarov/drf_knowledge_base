@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "articles.apps.ArticlesConfig",
     "users.apps.UsersConfig",
     "django.contrib.postgres",
-    "rest_framework"
+    "rest_framework",
+    "projects"
 ]
 
 MIDDLEWARE = [

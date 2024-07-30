@@ -16,3 +16,10 @@ class IsStaffOrReadOnly(BasePermission):
             return False
 
         return request.user and (request.user.is_staff or (section_id in request.user.change_list))
+
+
+class UserEditPermissons(BasePermission):
+    def has_permission(self, request, view):
+        if request.user.is_staff:
+            return True
+        return False

@@ -3,39 +3,60 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
 from users.models import User
+from django.db.models import Q
+from projects.models import Project
 
 
 class CustomTokenAuthentication(BaseAuthentication):
 
     def authenticate(self, request):
         auth = request.headers.get("Authorization")
+        suburl = request.headers.get("Suburl")
+        query = Project.objects.filter(suburl=suburl)
+        if not query.exists():
+            raise AuthenticationFailed('Project not found')
+        project = query.first()
+        if not project.is_active:
+            raise AuthenticationFailed('Project has unactive status')
         if not auth:
             return None
-        token = auth.split(" ")[1]
+        uuid = auth.split(" ")[1]
         try:
-            user = User.objects.get(last_amo_token=token)
+            filter = Q(amo_uuid=uuid)
+            filter &= Q(last_sub_url=suburl)
+            user = User.objects.filter(filter).first()
             if user:
-                return (user, token)
+                return (user, uuid)
         except :
             pass
         headers = {}
-        headers["Authorization"] = auth
-        response = requests.get("https://gktema.amocrm.ru/api/v4/leads",
-                         headers=headers)
+        headers["Authorization"] = f"Bearer {project.amo_token}"
+        params = {
+            'with': "uuid"
+        }
+        response = requests.get(f"https://{project.suburl}.amocrm.ru/api/v4/users",
+                         headers=headers, params=params)
+        if response.status_code != 200:
+            raise AuthenticationFailed('Cant connect to project')
+        try:
+            users = response.json()["_embedded"]["users"]
+            print(users)
+            for user in users:
+                if user["uuid"] == uuid:
+                    user = self.get_user(user["id"], uuid, user["name"], project)
+                    return (user, uuid)
+        except:
+            raise AuthenticationFailed('User not found')
 
-        decode = jwt.decode(token, options={'verify_signature': False})
-        if response.status_code == 200:
-            user = self.get_user(decode["sub"], token)
-            return (user, token)
-        else:
-            raise AuthenticationFailed('Invalid token')
 
-
-    def get_user(self, user_id, token):
+    def get_user(self, user_id, user_uuid, username, project):
         try:
             user = User.objects.get(amo_id=user_id)
-            user.last_amo_token = token
-            user.save()
         except User.DoesNotExist:
-            user = User.objects.create_user(amo_id=user_id, username=str(user_id), last_amo_token=token)
+            user = User.objects.create_user(amo_id=user_id,
+                                            username=username,
+                                            amo_uuid=user_uuid,
+                                            last_sub_url=project.suburl,
+                                            project=project)
+
         return user

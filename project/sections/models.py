@@ -1,12 +1,10 @@
-from django.db import models
-
 from django.db import models, transaction
 from django.db.models import Max, F
 
 
 class Section(models.Model):
     name = models.CharField(max_length=255, db_index=True)
-    project_id = models.PositiveBigIntegerField(default=1)
+    project = models.ForeignKey('projects.Project', on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     description = models.TextField()
