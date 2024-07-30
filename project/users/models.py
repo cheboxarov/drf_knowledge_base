@@ -4,10 +4,10 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class User(AbstractUser):
-    amo_id = models.PositiveIntegerField(null=True, blank=False)
-    change_list = ArrayField(models.PositiveIntegerField(), default=list, blank=False)
-    view_list = ArrayField(models.PositiveIntegerField(), default=list, blank=False)
-    last_amo_token = models.TextField(null=True, blank=False, db_index=True)
+    amo_id = models.PositiveIntegerField(null=True, blank=True)
+    change_list = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
+    view_list = ArrayField(models.PositiveIntegerField(), default=list, blank=True)
+    last_amo_token = models.TextField(null=True, blank=True, db_index=True)
 
     def __str__(self):
         return self.username
