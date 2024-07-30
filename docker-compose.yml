@@ -32,6 +32,8 @@ services:
     volumes:
       - static_data:/var/www/html/static/
       - ./nginx-conf.d:/etc/nginx/conf.d
+      - ./nginx/cert.pem:/etc/cert.pem
+      - ./nginx/key.pem:/etc/key.pem
   certbot:
     ports:
       - "6000:80"
