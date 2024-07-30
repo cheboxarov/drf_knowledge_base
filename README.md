@@ -117,17 +117,6 @@ Suburl: your_suburl_here
 ### Пользователи
 
 - **GET /api/v1/users/**: Получить список пользователей.
-- **POST /api/v1/users/**: Создать нового пользователя.
-  - Пример JSON тела запроса:
-    ```json
-    {
-        "username": "new_user",
-        "amo_id": 12345,
-        "change_list": [1, 2, 3],
-        "view_list": [1, 2, 3],
-        "is_staff": false
-    }
-    ```
 - **GET /api/v1/users/{amo_id}/**: Получить детальную информацию о пользователе.
 - **PUT /api/v1/users/{amo_id}/**: Обновить пользователя.
   - Пример JSON тела запроса:
