@@ -35,6 +35,8 @@ services:
       - ./nginx/cert.pem:/etc/cert.pem
       - ./nginx/key.pem:/etc/key.pem
   certbot:
+    depends_on:
+      - nginx
     ports:
       - "6000:80"
     volumes:
