@@ -129,7 +129,6 @@ Suburl: your_suburl_here
         "is_staff": false
     }
     ```
-- **DELETE /api/v1/users/{amo_id}/**: Удалить пользователя.
 
 ## Права доступа
 
