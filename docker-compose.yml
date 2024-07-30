@@ -28,10 +28,23 @@ services:
       - django
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - static_data:/var/www/html/static/
       - ./nginx-conf.d:/etc/nginx/conf.d
-
+  certbot:
+    ports:
+      - "6000:80"
+    env_file:
+      - .env
+    volumes:
+      - ./nginx/:/etc/nginx/
+    build:
+      context: ./certbot
+      dockerfile: Dockerfile
+      args:
+        DOMAIN_EMAIL: "wlovemrock@gmail.com"
+        DOMAIN_URL: "test-tema-yo-kruto.site"
 volumes:
   pg_data:
   static_data:
