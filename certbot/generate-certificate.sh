@@ -16,4 +16,4 @@ rm -rf /etc/nginx/key.pem
 #cp /etc/letsencrypt/live/certfolder*/fullchain.pem /etc/nginx/cert.pem
 #cp /etc/letsencrypt/live/certfolder*/privkey.pem /etc/nginx/key.pem
 
-ls
+ls ..
