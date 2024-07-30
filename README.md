@@ -24,8 +24,8 @@
 
 1. Клонируйте репозиторий:
     ```bash
-    git clone https://github.com/ваш-репозиторий.git
-    cd ваш-репозиторий
+    git clone https://github.com/cheboxarov/drf_knowledge_base.git
+    cd drf_knowledge_base
     ```
 
 2. Создайте файл `.env` в корне проекта и добавьте следующие переменные окружения:
