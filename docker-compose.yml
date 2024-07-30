@@ -26,7 +26,6 @@ services:
     image: nginx:1.19.8-alpine
     depends_on:
       - django
-      - certbot
     ports:
       - "80:80"
       - "443:443"
@@ -35,17 +34,6 @@ services:
       - ./nginx-conf.d:/etc/nginx/conf.d
       - ./nginx-conf.d/cert.pem:/etc/cert.pem
       - ./nginx-conf.d/key.pem:/etc/key.pem
-  certbot:
-    ports:
-      - "6000:80"
-    volumes:
-      - ./nginx-conf.d/:/etc/nginx/
-    build:
-      context: ./certbot
-      dockerfile: Dockerfile
-      args:
-        DOMAIN_EMAIL: "wlovemrock@gmail.com"
-        DOMAIN_URL: "test-tema-yo-kruto.site"
 volumes:
   pg_data:
   static_data:
