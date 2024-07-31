@@ -42,8 +42,8 @@
 
 4. Выполните миграции и создайте суперпользователя:
     ```bash
-    docker-compose exec django python manage.py migrate
-    docker-compose exec django python manage.py createsuperuser
+    docker-compose exec django python project/manage.py migrate
+    docker-compose exec django python project/manage.py createsuperuser
     ```
 
 ## Аутентификация
@@ -96,7 +96,6 @@ Suburl: your_suburl_here
     ```json
     {
         "name": "Новый раздел",
-        "project_id": 1,
         "description": "Описание нового раздела",
         "position": 0
     }
@@ -107,7 +106,6 @@ Suburl: your_suburl_here
     ```json
     {
         "name": "Обновленный раздел",
-        "project_id": 1,
         "description": "Обновленное описание раздела",
         "position": 0
     }
