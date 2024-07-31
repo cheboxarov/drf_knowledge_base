@@ -37,8 +37,9 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         section = serializer.validated_data.get('section')
-        if not section.id in self.request.user.change_list:
-            raise PermissionDenied(detail="You do not have permission to move to this section.")
+        if section is not None:
+            if not section.id in self.request.user.change_list and not self.request.user.is_staff:
+                raise PermissionDenied(detail="You do not have permission to move to this section.")
         self.check_object_permissions(self.request, serializer.instance)
         serializer.save()
 
