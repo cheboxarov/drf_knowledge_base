@@ -21,11 +21,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
         user = self.request.user
         queryset = Article.objects.all()
         if not user.is_staff:
-            queryset = queryset.filter(section_id__in=user.view_list)
+            queryset = queryset.filter(section_id__in=user.view_list).order_by('position')
 
         section_id = self.request.query_params.get('section')
         if section_id is not None:
-            queryset = queryset.filter(section_id=section_id)
+            queryset = queryset.filter(section_id=section_id).order_by('position')
 
         return queryset
 

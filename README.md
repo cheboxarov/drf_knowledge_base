@@ -60,8 +60,9 @@ Suburl: your_suburl_here
 
 ### Статьи
 
-- **GET /api/v1/articles/**: Получить список статей.
-- **POST /api/v1/articles/**: Создать новую статью.
+- **GET /api/v1/articles**: Получить список статей.
+- **GET /api/v1/articles?section=section_id**: Получить список статей в секции section_id.
+- **POST /api/v1/articles**: Создать новую статью.
   - Пример JSON тела запроса:
     ```json
     {
@@ -73,8 +74,8 @@ Suburl: your_suburl_here
         "position": 0
     }
     ```
-- **GET /api/v1/articles/{id}/**: Получить детальную информацию о статье.
-- **PUT /api/v1/articles/{id}/**: Обновить статью.
+- **GET /api/v1/articles/{id}**: Получить детальную информацию о статье.
+- **PUT /api/v1/articles/{id}**: Обновить статью.
   - Пример JSON тела запроса:
     ```json
     {
@@ -90,8 +91,8 @@ Suburl: your_suburl_here
 
 ### Разделы
 
-- **GET /api/v1/sections/**: Получить список разделов.
-- **POST /api/v1/sections/**: Создать новый раздел.
+- **GET /api/v1/sections**: Получить список разделов.
+- **POST /api/v1/sections**: Создать новый раздел.
   - Пример JSON тела запроса:
     ```json
     {
@@ -100,8 +101,8 @@ Suburl: your_suburl_here
         "position": 0
     }
     ```
-- **GET /api/v1/sections/{id}/**: Получить детальную информацию о разделе.
-- **PUT /api/v1/sections/{id}/**: Обновить раздел.
+- **GET /api/v1/sections/{id}**: Получить детальную информацию о разделе.
+- **PUT /api/v1/sections/{id}**: Обновить раздел.
   - Пример JSON тела запроса:
     ```json
     {
@@ -110,13 +111,13 @@ Suburl: your_suburl_here
         "position": 0
     }
     ```
-- **DELETE /api/v1/sections/{id}/**: Удалить раздел.
+- **DELETE /api/v1/sections/{id}**: Удалить раздел.
 
 ### Пользователи
 
-- **GET /api/v1/users/**: Получить список пользователей.
-- **GET /api/v1/users/{amo_id}/**: Получить детальную информацию о пользователе.
-- **PUT /api/v1/users/{amo_id}/**: Обновить пользователя.
+- **GET /api/v1/users**: Получить список пользователей.
+- **GET /api/v1/users/{amo_id}**: Получить детальную информацию о пользователе.
+- **PUT /api/v1/users/{amo_id}**: Обновить пользователя.
   - Пример JSON тела запроса:
     ```json
     {
