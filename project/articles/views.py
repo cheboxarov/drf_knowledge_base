@@ -19,14 +19,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Article.objects.all()
+        queryset = Article.objects.all().order_by('position')
         if not user.is_staff:
             queryset = queryset.filter(section_id__in=user.view_list).order_by('position')
 
         section_id = self.request.query_params.get('section')
         if section_id is not None:
-            queryset = queryset.filter(section_id=section_id).order_by('position')
-
+            queryset = queryset.filter(section_id=section_id)
         return queryset
 
     def perform_create(self, serializer):
