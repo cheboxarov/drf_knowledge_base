@@ -15,7 +15,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'wlovem.ru',
-    'www.wlovem.ru'
+    'www.wlovem.ru',
+    'localhost'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "django.contrib.postgres",
     "rest_framework",
-    "projects"
+    "projects",
+    "tests"
 ]
 
 MIDDLEWARE = [

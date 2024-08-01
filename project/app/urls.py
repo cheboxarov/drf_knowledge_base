@@ -21,7 +21,7 @@ from articles.views import ArticleViewSet
 from rest_framework import routers
 from users.views import UserViewSet
 
-router = routers.SimpleRouter(trailing_slash=False)
+router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'sections', SectionViewSet)
 router.register(r'articles', ArticleViewSet)
 router.register(r'users', UserViewSet)

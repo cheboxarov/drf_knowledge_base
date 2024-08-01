@@ -76,6 +76,7 @@ Suburl: your_suburl_here
     ```
 - **GET /api/v1/articles/{id}**: Получить детальную информацию о статье.
 - **PUT /api/v1/articles/{id}**: Обновить статью.
+- post /api/v1/articles/id/add-test
   - Пример JSON тела запроса:
     ```json
     {
