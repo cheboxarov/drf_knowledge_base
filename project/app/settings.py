@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     "rest_framework",
     "projects",
-    "tests"
+    "tests",
+    "courses"
 ]
 
 MIDDLEWARE = [

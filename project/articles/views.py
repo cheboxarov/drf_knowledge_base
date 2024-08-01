@@ -2,7 +2,7 @@ import django.core.exceptions
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from .models import Article
-from .serializers import ArticleDetailSerializer, ArticleListSerializer
+from .serializers import ArticleDetailSerializer, ArticleListSerializer, ArticleListSerializerWithTest
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsStaffOrReadOnly
@@ -19,6 +19,10 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == 'list':
+            w = self.request.query_params.get('with')
+            if w is not None:
+                if w == 'test':
+                    return ArticleListSerializerWithTest
             return ArticleListSerializer
         return ArticleDetailSerializer
 

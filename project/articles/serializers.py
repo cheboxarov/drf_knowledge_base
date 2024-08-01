@@ -1,5 +1,7 @@
+import django.core.exceptions
 from rest_framework import serializers
 from .models import Article
+from tests.models import Test
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -21,7 +23,8 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = [field.name for field in Article._meta.get_fields() if field.name != 'article'] + ['can_edit']
+        fields = ['id', 'section', 'parent', 'author', 'position',
+                  'content', 'date_created', 'date_update', 'can_edit']
 
     def get_can_edit(self, obj):
         user = self.context['request'].user
@@ -37,3 +40,17 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "The section of the parent article must match the section of the article being modified.")
         return data
+
+
+class ArticleListSerializerWithTest(ArticleListSerializer):
+    test_id = serializers.SerializerMethodField()
+
+    class Meta(ArticleListSerializer.Meta):
+        fields = ArticleListSerializer.Meta.fields + ['test_id']
+
+    def get_test_id(self, obj):
+        try:
+            test = Test.objects.get(article_id=obj.id)
+            return test.id
+        except django.core.exceptions.ObjectDoesNotExist:
+            return None
