@@ -23,7 +23,7 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'section', 'parent', 'author', 'position',
+        fields = ['id', 'name','section', 'parent', 'author', 'position',
                   'content', 'date_created', 'date_update', 'can_edit']
 
     def get_can_edit(self, obj):
