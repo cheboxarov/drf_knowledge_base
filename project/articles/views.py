@@ -95,7 +95,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             except django.core.exceptions.ObjectDoesNotExist:
                 raise NotFound()
             instance.delete()
-            return Response({"result":"deleted"})
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
     def check_object_permissions(self, request, obj):
         for permission in self.get_permissions():
