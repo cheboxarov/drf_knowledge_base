@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied
 from django.db.models.query import Q
 from rest_framework.response import Response
@@ -30,6 +30,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         self.check_object_permissions(self.request, serializer.instance)
         serializer.save()
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({"result": "deleted"},status=status.HTTP_200_OK)
 
     def perform_destroy(self, instance):
         self.check_object_permissions(self.request, instance)

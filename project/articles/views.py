@@ -3,7 +3,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from .models import Article
 from .serializers import ArticleDetailSerializer, ArticleListSerializer, ArticleListSerializerWithTest
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsStaffOrReadOnly
 from rest_framework.response import Response
@@ -51,6 +51,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, serializer.instance)
         serializer.save()
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({"result": "deleted"},status=status.HTTP_200_OK)
+
     def perform_destroy(self, instance):
         self.check_object_permissions(self.request, instance)
         instance.delete()
@@ -90,7 +95,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             except django.core.exceptions.ObjectDoesNotExist:
                 raise NotFound()
             instance.delete()
-            return Response({"result":"deleted"})
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
     def check_object_permissions(self, request, obj):
         for permission in self.get_permissions():
