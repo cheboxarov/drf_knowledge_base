@@ -16,7 +16,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'wlovem.ru',
     'www.wlovem.ru',
-    'localhost'
+    'localhost',
+    '217.144.162.253'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
