@@ -76,7 +76,7 @@ Suburl: your_suburl_here
     }
     ```
 - **GET /api/v1/articles/{id}**: Получить детальную информацию о статье.
-- **PUT /api/v1/articles/{id}**: Обновить статью.
+- **PATCH /api/v1/articles/{id}**: Обновить статью.
   - Пример JSON тела запроса:
     ```json
     {
@@ -103,7 +103,7 @@ Suburl: your_suburl_here
     }
     ```
 - **GET /api/v1/sections/{id}**: Получить детальную информацию о разделе.
-- **PUT /api/v1/sections/{id}**: Обновить раздел.
+- **PATCH /api/v1/sections/{id}**: Обновить раздел.
   - Пример JSON тела запроса:
     ```json
     {
@@ -118,7 +118,7 @@ Suburl: your_suburl_here
 
 - **GET /api/v1/users**: Получить список пользователей.
 - **GET /api/v1/users/{amo_id}**: Получить детальную информацию о пользователе.
-- **PUT /api/v1/users/{amo_id}**: Обновить пользователя.
+- **PATCH /api/v1/users/{amo_id}**: Обновить пользователя.
   - Пример JSON тела запроса:
     ```json
     {

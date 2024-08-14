@@ -6,16 +6,18 @@ class IsStaffOrReadOnly(BasePermission):
         return True
 
     def has_object_permission(self, request, view, obj):
-        if request.method in ['GET', 'HEAD', 'OPTIONS']:
+        if request.method in ["GET", "HEAD", "OPTIONS"]:
             return True
-        if hasattr(obj, 'section'):
+        if hasattr(obj, "section"):
             section_id = obj.section.id
-        elif hasattr(obj, 'id'):
+        elif hasattr(obj, "id"):
             section_id = obj.id
         else:
             return False
 
-        return request.user and (request.user.is_staff or (section_id in request.user.change_list))
+        return request.user and (
+            request.user.is_staff or (section_id in request.user.change_list)
+        )
 
 
 class UserEditPermissons(BasePermission):

@@ -5,4 +5,11 @@ from .models import Section
 class SectionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Section
-        fields = ['id', 'name', 'description', 'position', 'date_update', 'date_created']
+        fields = [
+            "id",
+            "name",
+            "description",
+            "position",
+            "date_update",
+            "date_created",
+        ]
