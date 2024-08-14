@@ -83,7 +83,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     @action(
         detail=True, methods=["get", "post", "delete", "patch"], url_path="comments"
     )
-    def comments(self, request, pk: int = None):
+    def comments(self, request, pk = None):
         if request.method == "GET":
             comments = Comment.objects.filter(article_id=pk).all()
             serializer = CommentSerializer(instance=comments, many=True)
@@ -92,6 +92,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             data = request.data.copy()
             print(data)
             data["article"] = pk
+            print(pk)
             serializer = CommentSerializer(data=data)
             serializer.is_valid(raise_exception=True)
             serializer.create(serializer.validated_data)
