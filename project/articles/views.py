@@ -6,7 +6,7 @@ from .serializers import (
     ArticleDetailSerializer,
     ArticleListSerializer,
     ArticleListSerializerWithTest,
-    CommentSerializer
+    CommentSerializer,
 )
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -80,7 +80,9 @@ class ArticleViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, instance)
         instance.delete()
 
-    @action(detail=True, methods=["get", "post", "delete", "patch"], url_path="comments")
+    @action(
+        detail=True, methods=["get", "post", "delete", "patch"], url_path="comments"
+    )
     def comments(self, request, pk: int = None):
         if request.method == "GET":
             comments = Comment.objects.filter(article_id=pk).all()
@@ -88,12 +90,12 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         if request.method == "POST":
             data = request.data.copy()
+            print(data)
             data["article"] = pk
             serializer = CommentSerializer(data=data)
             serializer.is_valid(raise_exception=True)
             serializer.create(serializer.validated_data)
             return Response(serializer.data)
-
 
     @action(detail=True, methods=["get", "post", "patch", "delete"], url_path="test")
     def test(self, request, pk=None):
