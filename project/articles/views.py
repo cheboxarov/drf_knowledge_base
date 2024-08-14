@@ -35,13 +35,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
         queryset = (
             Article.objects.all()
             .order_by("position")
-            .prefetch_related("section", "project")
+            .prefetch_related("section")
         )
         if not user.is_staff:
             queryset = (
                 queryset.filter(section_id__in=user.view_list)
                 .order_by("position")
-                .prefetch_related("section", "project")
+                .prefetch_related("section")
             )
         section_id = self.request.query_params.get("section")
         if section_id is not None:
