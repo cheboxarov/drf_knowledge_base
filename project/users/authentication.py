@@ -52,7 +52,7 @@ class CustomTokenAuthentication(BaseAuthentication):
         self, user_id: int, user_uuid: str, username: str, project: Project
     ) -> User:
         try:
-            user = User.objects.get(amo_id=user_id)
+            user = User.objects.get(amo_id=user_id, project=project)
         except User.DoesNotExist:
             translited_name = translit(username.replace(" ", "_"), language_code="ru", reversed=True).lower()
             username = f"{translited_name}_{project.suburl}"
