@@ -48,13 +48,15 @@ class CustomTokenAuthentication(BaseAuthentication):
         except:
             raise AuthenticationFailed("User not found")
 
-    def get_user(self, user_id, user_uuid, username, project):
+    def get_user(
+        self, user_id: int, user_uuid: str, username: str, project: Project
+    ) -> User:
         try:
             user = User.objects.get(amo_id=user_id)
         except User.DoesNotExist:
-            username = translit(
+            username = f"{translit(
                 username.replace(" ", "_"), language_code="ru", reversed=True
-            )
+            )}_{project.suburl}"
             user = User.objects.create_user(
                 amo_id=user_id,
                 username=username,
