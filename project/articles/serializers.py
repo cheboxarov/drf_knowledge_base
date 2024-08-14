@@ -1,6 +1,6 @@
 import django.core.exceptions
 from rest_framework import serializers
-from .models import Article
+from .models import Article, Comment
 from tests.models import Test
 
 
@@ -65,3 +65,10 @@ class ArticleListSerializerWithTest(ArticleListSerializer):
             return test.id
         except django.core.exceptions.ObjectDoesNotExist:
             return None
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = "__all__"

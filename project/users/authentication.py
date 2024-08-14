@@ -54,7 +54,9 @@ class CustomTokenAuthentication(BaseAuthentication):
         try:
             user = User.objects.get(amo_id=user_id, project=project)
         except User.DoesNotExist:
-            translited_name = translit(username.replace(" ", "_"), language_code="ru", reversed=True).lower()
+            translited_name = translit(
+                username.replace(" ", "_"), language_code="ru", reversed=True
+            ).lower()
             username = f"{translited_name}_{project.suburl}"
             user = User.objects.create_user(
                 amo_id=user_id,
