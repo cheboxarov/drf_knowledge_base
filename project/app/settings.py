@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     "projects",
     "tests",
     "courses",
-    "comments"
+    "comments",
 ]
 
 MIDDLEWARE = [

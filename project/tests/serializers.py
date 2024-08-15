@@ -7,7 +7,8 @@ class TestSerializerDetail(ModelSerializer):
 
     class Meta:
         model = Test
-        fields = ["questions", "article"]
+        fields = ["questions"]
+        read_only_fields = ["article"]
 
     def validate_questions(self, value):
         for question in value:
