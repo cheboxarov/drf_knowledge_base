@@ -92,7 +92,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
         if request.method == "POST":
             data = request.data.copy()
             print(data)
-            data["article_id"] = pk
+            data["article"] = pk
             print(pk)
             serializer = CommentSerializer(data=data)
             serializer.is_valid(raise_exception=True)
