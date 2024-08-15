@@ -1,6 +1,6 @@
 import django.core.exceptions
 from rest_framework import serializers
-from .models import Article, Comment
+from .models import Article
 from tests.models import Test
 
 
