@@ -1,16 +1,16 @@
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from .models import Comment
 from .serializers import CommentSerializer
-from users.permissions import IsStaffOrReadOnly
-
+from .permissions import IsStaffOrOwner
 
 class CommentsViewSet(ModelViewSet):
     queryset = Comment.objects.all().select_related("article", "article__section")
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsStaffOrReadOnly]
+    permission_classes = [IsAuthenticated, IsStaffOrOwner]
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: CommentSerializer):
         article_id = int(self.kwargs.get("article_pk"))
         author_id = (
             self.request.user.amo_id
