@@ -35,4 +35,8 @@ articles_router = NestedSimpleRouter(router, r"articles", lookup="article")
 articles_router.register(r"comments", CommentsViewSet, basename="article-comments")
 
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/v1/", include(router.urls))]
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/v1/', include(router.urls)),
+    path('api/v1/', include(articles_router.urls)),
+]
