@@ -85,15 +85,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
     )
     def comments(self, request, pk = None):
         if request.method == "GET":
-            print(pk)
             comments = Comment.objects.filter(article_id=pk).all()
             serializer = CommentSerializer(instance=comments, many=True)
             return Response(serializer.data)
         if request.method == "POST":
             data = request.data.copy()
-            print(data)
             data["article"] = pk
-            print(pk)
+            data["author_id"] = request.user.amo_id
             serializer = CommentSerializer(data=data)
             serializer.is_valid(raise_exception=True)
             serializer.create(serializer.validated_data)
