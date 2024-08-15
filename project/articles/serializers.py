@@ -65,10 +65,3 @@ class ArticleListSerializerWithTest(ArticleListSerializer):
             return test.id
         except django.core.exceptions.ObjectDoesNotExist:
             return None
-
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = ("id", "author_id", "date_created", "text", "article")
