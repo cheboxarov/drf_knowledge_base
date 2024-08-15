@@ -13,7 +13,7 @@ class UserViewSet(ModelViewSet):
 
     # Переопределяет получение объекта при PATCH PUT на амовский id
     def get_queryset(self):
-        return User.objects.filter(project=self.request.user.project).all()
+        return User.objects.filter(project=self.request.user.project).all().select_related("project")
 
     def get_object(self):
         amo_id = self.kwargs.get("amo_id")
