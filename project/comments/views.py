@@ -20,4 +20,5 @@ class CommentsViewSet(ModelViewSet):
         queryset = Comment.objects.all().select_related("article", "article__section")
         if not user.is_staff:
             queryset = queryset.filter(article__section_id__in=user.view_list)
+            print("User is not staff")
         return queryset
