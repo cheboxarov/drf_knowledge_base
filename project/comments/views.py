@@ -14,3 +14,10 @@ class CommentsViewSet(ModelViewSet):
         article_id = int(self.kwargs.get('article_pk'))
         author_id = self.request.user.amo_id  # Убедитесь, что это корректный способ получения идентификатора пользователя
         serializer.save(article_id=article_id, author_id=author_id)
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Comment.objects.all().select_related("article", "article__section")
+        if not user.is_staff:
+            queryset = queryset.filter(article__section_id__in=user.view_list)
+        return queryset
