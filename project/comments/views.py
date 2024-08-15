@@ -12,4 +12,5 @@ class CommentsViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         article_id = self.kwargs.get('article_pk')
-        serializer.save(article_id=article_id, author=self.request.user)
+        author_id = self.request.user.amo_id  # Убедитесь, что это корректный способ получения идентификатора пользователя
+        serializer.save(article_id=article_id, author_id=author_id)
