@@ -1,13 +1,12 @@
 from .models import Test
 from rest_framework.serializers import ModelSerializer, ValidationError
-from typing import List
 
 
 class TestSerializerDetail(ModelSerializer):
 
     class Meta:
         model = Test
-        fields = ["questions", "article"]
+        fields = ["id", "questions"]
 
     def validate_questions(self, value):
         for question in value:

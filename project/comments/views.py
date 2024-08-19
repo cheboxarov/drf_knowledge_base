@@ -5,6 +5,7 @@ from .models import Comment
 from .serializers import CommentSerializer
 from .permissions import IsStaffOrOwner
 
+
 class CommentsViewSet(ModelViewSet):
     queryset = Comment.objects.all().select_related("article", "article__section")
     serializer_class = CommentSerializer

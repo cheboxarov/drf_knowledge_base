@@ -1,6 +1,7 @@
 from django.db import models, transaction
 from django.db.models import Max, F
 from articles.models import Article
+from tests.models import Test
 
 
 class Course(models.Model):
@@ -48,3 +49,22 @@ class Course(models.Model):
                 position=F("position") - 1
             )
             super().delete(*args, **kwargs)
+
+
+class CourseProgress(models.Model):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    articles_read = models.ManyToManyField("articles.Article", null=True, blank=True)
+    passed_tests = models.ManyToManyField("tests.Test", null=True, blank=True)
+
+    def __str__(self):
+        return f"Прогресс по курсу {self.course.name} от {self.user.username}"
+
+
+class TestLog(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+    time_spend = models.PositiveIntegerField(default=0)
+    number_of_errors = models.PositiveIntegerField(default=0)

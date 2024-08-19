@@ -2,6 +2,7 @@ import django.core.exceptions
 from rest_framework import serializers
 from .models import Article
 from tests.models import Test
+from tests.serializers import TestSerializerDetail
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -54,14 +55,19 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
 
 
 class ArticleListSerializerWithTest(ArticleListSerializer):
-    test_id = serializers.SerializerMethodField()
+    test = serializers.SerializerMethodField()
 
     class Meta(ArticleListSerializer.Meta):
-        fields = ArticleListSerializer.Meta.fields + ["test_id"]
+        fields = ArticleListSerializer.Meta.fields + ["test"]
 
-    def get_test_id(self, obj):
+    def get_test(self, obj):
         try:
-            test = Test.objects.get(article_id=obj.id)
-            return test.id
-        except django.core.exceptions.ObjectDoesNotExist:
+            test = (
+                Test.objects.select_related("article")
+                .select_related("article__section")
+                .select_related("article__section__project")
+                .get(article_id=obj.id)
+            )
+            return TestSerializerDetail(test).data
+        except Test.DoesNotExist:
             return None
