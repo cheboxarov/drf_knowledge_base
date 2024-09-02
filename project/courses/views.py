@@ -58,21 +58,17 @@ class CourseViewSet(viewsets.ModelViewSet):
     def passed_test(self, request, pk=None):
         data = request.data.copy()
 
-        test_id = data.get(
-            "test_id"
-        )
+        test_id = data.get("test_id")
         if test_id is None:
             return Response({"Error": "test_id is expected in the request body"})
-        time_spend = data.get(
-            "time_spend"
-        )
+        time_spend = data.get("time_spend")
         if time_spend is None:
             return Response({"Error": "time_spend is expected in the request body"})
-        number_of_errors = data.get(
-            "number_of_errors"
-        )
+        number_of_errors = data.get("number_of_errors")
         if number_of_errors is None:
-            return Response({"Error": "number_of_errors is expected in the request body"})
+            return Response(
+                {"Error": "number_of_errors is expected in the request body"}
+            )
         course = Course.objects.get(id=pk)
         if not Test.objects.filter(id=test_id).exists():
             return Response(

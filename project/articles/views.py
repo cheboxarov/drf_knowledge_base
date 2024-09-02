@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from tests.models import Test
 from tests.serializers import TestSerializerDetail
 from rest_framework.exceptions import NotFound
+from logs.signals import log_delete
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -55,7 +56,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             raise PermissionDenied(
                 detail="You do not have permission to create this article."
             )
-        serializer.save()
+        serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
         section = serializer.validated_data.get("section")
@@ -68,7 +69,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
                     detail="You do not have permission to move to this section."
                 )
         self.check_object_permissions(self.request, serializer.instance)
-        serializer.save()
+        serializer.save(user=self.request.user)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -76,6 +77,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
         return Response({"result": "deleted"}, status=status.HTTP_200_OK)
 
     def perform_destroy(self, instance):
+        user = self.request.user
+        log_delete(sender=self.get_queryset().model, instance=instance, user=user)
         self.check_object_permissions(self.request, instance)
         instance.delete()
 
@@ -94,7 +97,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             data["article"] = pk
             serializer = TestSerializerDetail(data=data)
             serializer.is_valid(raise_exception=True)
-            serializer.create(serializer.validated_data)
+            serializer.save(user=self.request.user)
             return Response(serializer.data)
         elif request.method == "PATCH":
             data = request.data.copy()
@@ -106,7 +109,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
                 raise NotFound()
             serializer = TestSerializerDetail(instance, data=data)
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            serializer.save(user=self.request.user)
             return Response(serializer.data)
         elif request.method == "DELETE":
             try:
@@ -120,5 +123,4 @@ class ArticleViewSet(viewsets.ModelViewSet):
         for permission in self.get_permissions():
             if not permission.has_object_permission(request, self, obj):
                 raise PermissionDenied(
-                    detail=f"You do not have permission to perform this action on {obj}."
-                )
+                    detail=f"You do not have permission to perform this action on {obj}.")

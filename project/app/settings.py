@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "tests",
     "courses",
     "comments",
+    "logs",
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Article
 from tests.models import Test
 from tests.serializers import TestSerializerDetail
+from logs.signals import log_save
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -36,6 +37,18 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             "date_update",
             "can_edit",
         ]
+
+    def create(self, validated_data):
+        user = validated_data.pop("user")
+        instance = super().create(validated_data)
+        log_save(sender=self.Meta.model, instance=instance, created=True, user=user)
+        return instance
+
+    def update(self, instance, validated_data):
+        user = validated_data.pop("user", None)
+        instance = super().update(instance, validated_data)
+        log_save(sender=self.Meta.model, instance=instance, created=False, user=user)
+        return instance
 
     def get_can_edit(self, obj):
         user = self.context["request"].user
