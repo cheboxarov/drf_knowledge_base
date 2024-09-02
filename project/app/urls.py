@@ -7,14 +7,14 @@ from users.views import UserViewSet
 from courses.views import CourseViewSet
 from rest_framework_nested.routers import NestedSimpleRouter
 from comments.views import CommentsViewSet
-from logs.views import LogEntryViewset
+from logs.views import LogEntryViewSet
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r"sections", SectionViewSet)
 router.register(r"articles", ArticleViewSet)
 router.register(r"users", UserViewSet)
 router.register(r"courses", CourseViewSet)
-router.register(r"logs", LogEntryViewset)
+router.register(r"logs", LogEntryViewSet)
 
 articles_router = NestedSimpleRouter(router, r"articles", lookup="article")
 articles_router.register(r"comments", CommentsViewSet, basename="article-comments")
