@@ -1,4 +1,4 @@
-from .models import Course, CourseProgress
+from .models import Course, CourseProgress, CoursesGroup
 from rest_framework.serializers import ModelSerializer
 from articles.serializers import ArticleListSerializerWithTest
 from rest_framework import serializers
@@ -59,3 +59,17 @@ class CourseDetailRetrieveSerializer(CourseDetailSerializer):
 
     class Meta(CourseDetailSerializer.Meta):
         pass
+
+
+class CourseGroupListSerializer(ModelSerializer):
+
+    courses = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CoursesGroup
+        fields = ("id", "name")
+
+    def get_courses(self, instance: CoursesGroup):
+        courses_ids = instance.courses.only('id')
+        courses
+        """пу-пу-пу"""

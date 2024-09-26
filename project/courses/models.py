@@ -68,3 +68,11 @@ class TestLog(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     time_spend = models.PositiveIntegerField(default=0)
     number_of_errors = models.PositiveIntegerField(default=0)
+
+
+class CoursesGroup(models.Model):
+    name = models.CharField(max_length=255, db_index=True)
+    courses = models.ManyToManyField(to=Course)
+    project = models.ForeignKey("projects.Project", on_delete=models.CASCADE, null=True)
+    date_create = models.DateTimeField(auto_now_add=True)
+    date_update = models.DateTimeField(auto_now=True)
