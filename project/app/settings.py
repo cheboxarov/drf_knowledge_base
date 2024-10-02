@@ -19,6 +19,13 @@ CSRF_TRUSTED_ORIGINS = ["https://apps.widgets-tema.ru", "http://localhost:82"]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOW_HEADERS = [
+    'authorization',
+    'content-type',
+    'Suburl',
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [
