@@ -33,7 +33,7 @@ articles_router = NestedSimpleRouter(router, r"articles", lookup="article")
 articles_router.register(r"comments", CommentsViewSet, basename="article-comments")
 
 urlpatterns = [
-    path('knowledge', include([
+    path('knowledge/', include([
         path("admin/", admin.site.urls),
         path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
         path("api/v1/", include(router.urls)),
