@@ -17,6 +17,8 @@ ALLOWED_HOSTS = ["apps.widgets-tema.ru", "localhost", "217.144.162.253", "http:/
 
 CSRF_TRUSTED_ORIGINS = ["https://apps.widgets-tema.ru", "http://localhost:82"]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -30,6 +32,7 @@ INSTALLED_APPS = [
     "articles.apps.ArticlesConfig",
     "users.apps.UsersConfig",
     "django.contrib.postgres",
+    "corsheaders",
     "drf_yasg",
     "rest_framework",
     "projects",
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
