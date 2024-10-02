@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from django.db.models.query import Q
 from rest_framework.response import Response
-from .models import Course, CourseProgress, TestLog
+from .models import Course, CourseProgress, TestLog, CoursesGroup
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsStaffOrReadOnly
 from rest_framework.decorators import action
@@ -10,6 +10,8 @@ from .serializers import (
     CourseListSerializer,
     CourseDetailSerializer,
     CourseDetailRetrieveSerializer,
+    CourseGroupListSerializer,
+    CourseGroupDetailSerializer
 )
 from articles.models import Article
 from tests.models import Test
@@ -155,3 +157,31 @@ class CourseViewSet(viewsets.ModelViewSet):
                 raise PermissionDenied(
                     detail=f"You do not have permission to perform this action on {obj}."
                 )
+
+
+class CourseGroupViewSet(viewsets.ModelViewSet):
+
+    queryset = CoursesGroup.objects.all()
+    serializer_class = CourseListSerializer
+    permission_classes = [IsAuthenticated, IsStaffOrReadOnly]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = CoursesGroup.objects.filter(project=user.project)
+        if not user.is_staff:
+            queryset = queryset.filter(id__in=user.course_list)
+        if self.action == "list":
+            queryset = queryset.only("id", "name")
+        elif self.action == "retrieve":
+            queryset = queryset.only("id", "name", "courses").prefetch_related("courses")
+        return queryset
+
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return CourseGroupListSerializer
+        elif self.action == "retrieve":
+            return CourseGroupDetailSerializer
+        return super().get_serializer_class()
+
+

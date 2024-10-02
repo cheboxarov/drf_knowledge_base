@@ -63,13 +63,13 @@ class CourseDetailRetrieveSerializer(CourseDetailSerializer):
 
 class CourseGroupListSerializer(ModelSerializer):
 
-    courses = serializers.SerializerMethodField()
-
     class Meta:
         model = CoursesGroup
-        fields = ("id", "name")
+        fields = ["id", "name"]
 
-    def get_courses(self, instance: CoursesGroup):
-        courses_ids = instance.courses.only('id')
-        courses
-        """пу-пу-пу"""
+
+class CourseGroupDetailSerializer(CourseGroupListSerializer):
+    courses = CourseDetailSerializer(many=True)
+
+    class Meta(CourseGroupListSerializer.Meta):
+        fields = CourseGroupListSerializer.Meta.fields + ["courses"]

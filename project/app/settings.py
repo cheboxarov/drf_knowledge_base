@@ -13,9 +13,9 @@ SECRET_KEY = "django-insecure-(b#4^i^mtoc8c90%p3be-c*#ritdc_2cm0j+x9lhylpe%!r#hg
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["wlovem.ru", "www.wlovem.ru", "localhost", "217.144.162.253"]
+ALLOWED_HOSTS = ["wlovem.ru", "www.wlovem.ru", "localhost", "217.144.162.253", "http://localhost:82"]
 
-CSRF_TRUSTED_ORIGINS = ["https://wlovem.ru", "https://www.wlovem.ru"]
+CSRF_TRUSTED_ORIGINS = ["https://wlovem.ru", "https://www.wlovem.ru", "http://localhost:82"]
 
 # Application definition
 
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "articles.apps.ArticlesConfig",
     "users.apps.UsersConfig",
     "django.contrib.postgres",
+    "drf_yasg",
     "rest_framework",
     "projects",
     "tests",
