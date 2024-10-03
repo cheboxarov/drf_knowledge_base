@@ -8,7 +8,7 @@ class Section(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     description = models.TextField()
-    position = models.PositiveIntegerField(default=0, db_index=True)
+    position = models.PositiveIntegerField(default=0, db_index=True, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
