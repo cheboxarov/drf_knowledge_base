@@ -11,7 +11,7 @@ class Course(models.Model):
     articles = models.ManyToManyField(Article)
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
-    position = models.PositiveIntegerField()
+    position = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
