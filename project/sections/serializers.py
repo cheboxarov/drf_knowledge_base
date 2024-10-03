@@ -12,11 +12,11 @@ class SectionDetailSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "position",
             "date_update",
             "date_created",
             "can_edit",
         ]
+        read_only_fields = ["position"]
 
     def get_can_edit(self, obj):
         user = self.context["request"].user
