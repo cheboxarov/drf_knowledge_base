@@ -44,6 +44,8 @@ class CourseArticleSerializer(ArticleListSerializerWithTest):
 
     def get_test(self, instance: Article):
         data = super().get_test(instance)
+        if data is None:
+            return None
         user = self.context["request"].user
         course_id = self.context["view"].kwargs.get("pk")
         if not CourseProgress.objects.filter(user=user, course_id=course_id).exists():

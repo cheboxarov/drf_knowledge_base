@@ -176,7 +176,6 @@ class CourseGroupViewSet(viewsets.ModelViewSet):
             queryset = queryset.only("id", "name", "courses").prefetch_related("courses")
         return queryset
 
-
     def get_serializer_class(self):
         if self.action == "list":
             return CourseGroupListSerializer
